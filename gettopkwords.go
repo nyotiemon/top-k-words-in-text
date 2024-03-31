@@ -6,10 +6,10 @@ func TopKBinarySearchMapStr(words map[string]int, k int) []*WordNode {
 	result := make([]*WordNode, 0, k+1) // +1 to prevent append fn do reallocation
 	min := 0
 	for str, count := range words {
-		if len(result) <= 1 {
+		if len(result) < 1 {
 			result = append(result, &WordNode{str: str, count: count})
 			min = getmin(min, count)
-		} else if count >= min {
+		} else if len(result) < k || count >= min {
 			// binary search to find insert position
 
 			l, r := 0, len(result)
@@ -37,10 +37,10 @@ func TopKBinarySearchMapNode(words map[string]*WordNode, k int) []*WordNode {
 	result := make([]*WordNode, 0, k+1) // +1 to prevent append fn do reallocation
 	min := 0
 	for _, word := range words {
-		if len(result) <= 1 {
+		if len(result) < 1 {
 			result = append(result, word)
 			min = getmin(min, word.count)
-		} else if word.count >= min {
+		} else if len(result) < k || word.count >= min {
 			// binary search to find insert position
 
 			l, r := 0, len(result)
